@@ -44,18 +44,22 @@ res.status(200).json({
 
 
 .get('/top50/artist/:artistName', (req, res) => {
-    console.log("THIS IS THE ARTIST",top50[1]);
+    
     const artist = req.params.artistName;
     let data = [] ;
   top50.filter(element => {
-    if(element.artist.toLowerCase() === artist){
+    if(element.artist.toLowerCase() === artist.toLocaleLowerCase()){
 data.push(element)};
-  })
-  res.status(200).json({
-        status: 200, data
-      })
+  });
+  if(data.length === 0){
+    res.status(400).json({status: 400, message: "Artist cannot be found." })
+  } else {
+    res.status(200).json({ status: 200, data})
+  }
+
+
     
-    })
+})
 
 .get('/top50/popular-artist/', (req, res) => {
 
@@ -81,9 +85,10 @@ data.push(element)};
   {MostPopularSongs.push(song)}
 });
 
+const data = MostPopularSongs;
 
     res.status(200).json({
-          status: 200, MostPopularSongs
+          status: 200, data
         })
       
       })
@@ -95,7 +100,9 @@ const filteredArtist = top50.map(song => song.artist);
 console.log("ARTIST",filteredArtist )
 const AllArtists = [...new Set(filteredArtist)];
 
-  res.status(200).json({ status: 200, AllArtists})
+const data = AllArtists;
+
+  res.status(200).json({ status: 200, data})
 })
 
 
