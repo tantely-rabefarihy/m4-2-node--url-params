@@ -56,8 +56,6 @@ data.push(element)};
   } else {
     res.status(200).json({ status: 200, data})
   }
-
-
     
 })
 
